@@ -4,8 +4,28 @@ import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import Layout, { siteTitle } from "../components/Layout";
 import utilStyle from "../styles/utils.module.css";
+import { getPostsData } from "../lib/post";
 
-export default function Home() {
+// SSGの場合はgetStaticPropsを使用する。
+export async function getStaticProps() {
+  const allPostsData = getPostsData();
+  return {
+    props: {
+      allPostsData,
+    },
+  };
+}
+
+// SSRの場合は？
+// export async function getServerSideProps(context) {
+//   return {
+//     props: {
+//       // コンポーネントに渡すためのprops
+//     },
+//   };
+// }
+
+export default function Home({ allPostsData }) {
   return (
     <div>
       <Head>
@@ -21,58 +41,18 @@ export default function Home() {
         <section>
           <h2 className={utilStyle.boldText}>📝初心者エンジニアのブログ</h2>
           <div className={styles.grid}>
-            <article>
-              <Link href="">
-                <img
-                  src="/images/thumbnail01.jpg"
-                  className={styles.thumbnailImage}
-                />
-              </Link>
-              <Link href="/" className={utilStyle.boldText}>
-                SSGとSSRの使い分けはいつ？
-              </Link>
-              <br></br>
-              <small className={utilStyle.lightText}>登録日2024-02-10</small>
-            </article>
-            <article>
-              <Link href="">
-                <img
-                  src="/images/thumbnail01.jpg"
-                  className={styles.thumbnailImage}
-                />
-              </Link>
-              <Link href="/" className={utilStyle.boldText}>
-                SSGとSSRの使い分けはいつ？
-              </Link>
-              <br></br>
-              <small className={utilStyle.lightText}>登録日2024-02-10</small>
-            </article>
-            <article>
-              <Link href="">
-                <img
-                  src="/images/thumbnail01.jpg"
-                  className={styles.thumbnailImage}
-                />
-              </Link>
-              <Link href="/" className={utilStyle.boldText}>
-                SSGとSSRの使い分けはいつ？
-              </Link>
-              <br></br>
-              <small className={utilStyle.lightText}>登録日2024-02-10</small>
-            </article>
-            <article>
-              <Link href="">
-                <img
-                  src="/images/thumbnail01.jpg"
-                  className={styles.thumbnailImage}
-                />
-              </Link>
-              <Link href="/" className={utilStyle.boldText}>
-                SSGとSSRの使い分けはいつ？
-              </Link>
-              <br></br>
-              <small className={utilStyle.lightText}>登録日2024-02-10</small>
-            </article>
+            {allPostsData.map(({ id, title, date, thumbnail }) => (
+              <article key={id}>
+                <Link href={`/posts/${id}`}>
+                  <img src={thumbnail} className={styles.thumbnailImage} />
+                </Link>
+                <Link href="/" className={utilStyle.boldText}>
+                  {title}
+                </Link>
+                <br></br>
+                <small className={utilStyle.lightText}>{date}</small>
+              </article>
+            ))}
           </div>
         </section>
       </Layout>
