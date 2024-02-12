@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Layout from "../../components/Layout";
 import { getAllPostIds, getPostData } from "../../lib/post";
 import utilStyles from "../../styles/utils.module.css";
@@ -28,6 +29,9 @@ export async function getStaticProps({ params }) {
 export default function Post({ postData }) {
   return (
     <div>
+      <Head>
+        <title>{postData.title}</title>
+      </Head>
       <Layout>
         <article>
           <h1 className={utilStyles.headingX1}>{postData.title}</h1>

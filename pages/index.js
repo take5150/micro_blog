@@ -31,10 +31,10 @@ export default function Home({ allPostsData }) {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <Layout>
+      <Layout home>
         <section>
           <p className={utilStyle.headingMd}>
-            初心者エンジニアのtakeです/日々プログラムを学習/好きな言語はJSです
+            初心者エンジニアのtakeです/日々プログラムを学習/好きな言語は日本語です。
           </p>
         </section>
 
