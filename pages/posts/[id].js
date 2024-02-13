@@ -17,6 +17,7 @@ export async function getStaticPaths() {
 
 // SSG
 export async function getStaticProps({ params }) {
+  // パラメータのid(ファイル名)をもとにpostの投稿内容を取得
   const postData = await getPostData(params.id);
 
   return {
